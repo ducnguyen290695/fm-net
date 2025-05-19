@@ -6,9 +6,14 @@ run_step() {
     local message="$1"
     local command="$2"
 
-    green "$message--------------------------------"
-    eval "$command"
+    green "🔄 $message"
+    if eval "$command"; then
+        green "✅ $message completed successfully"
+    else
+        echo "❌ $message failed"
+        exit 1
+    fi
 }
 
-run_step "Start linting" "yarn lint"
-run_step "Start formatting" "yarn format"
+run_step "Check lint" "yarn lint"
+run_step "Format code" "yarn format"
