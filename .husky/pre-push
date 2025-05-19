@@ -5,11 +5,11 @@ readonly STAGED_CHANGES_MSG="Staged changes found. Please commit them before pus
 readonly BUILD_FAILED_MSG="Build failed"
 
 print_success() {
-    echo -e "\033[1;32m$1\033[0m"
+    echo "\033[1;32m$1\033[0m"
 }
 
 print_error() {
-    echo -e "\033[1;31m$1\033[0m" >&2
+    echo "\033[1;31m$1\033[0m" >&2
     exit 1
 }
 
