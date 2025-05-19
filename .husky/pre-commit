@@ -1,14 +1,12 @@
 #!/bin/bash
 
-green() { echo -e "\033[32m$1\033[0m"; }
-
 run_step() {
     local message="$1"
     local command="$2"
 
-    green "🔄 $message"
+    echo "🔄 $message"
     if eval "$command"; then
-        green "✅ $message completed successfully"
+        echo "✅ $message completed successfully"
     else
         echo "❌ $message failed"
         exit 1
