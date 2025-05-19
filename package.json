@@ -10,14 +10,21 @@
     "format": "prettier . --write"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
+    "dompurify": "^3.2.5",
+    "lodash": "^4.17.21",
     "next": "14.2.28",
+    "path-to-regexp": "^8.2.0",
+    "query-string": "^9.1.2",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.89.0"
+    "sass": "^1.89.0",
+    "secure-json-parse": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
     "@types/eslint__js": "^9.14.0",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
