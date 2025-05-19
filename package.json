@@ -3,18 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "./scripts/start-dev.sh",
+    "dev:mac": "chmod +x ./scripts/start-dev.sh && ./scripts/start-dev.sh",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier . --write",
-    "prepare": "husky"
+    "prepare": "husky",
+    "merge-db": "./scripts/merge-db.sh",
+    "merge-db:mac": "chmod +x ./scripts/merge-db.sh && ./scripts/merge-db.sh"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",
     "dompurify": "^3.2.5",
+    "json-server": "0.17.3",
     "lodash": "^4.17.21",
     "next": "14.2.28",
     "path-to-regexp": "^8.2.0",
