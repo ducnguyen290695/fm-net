@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export function useResponsive(breakpoints: Record<string, number>) {
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | null>(null);
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     function updateBreakpoint() {
@@ -17,7 +19,7 @@ export function useResponsive(breakpoints: Record<string, number>) {
 
     updateBreakpoint();
     window.addEventListener('resize', updateBreakpoint);
-    
+
     return () => window.removeEventListener('resize', updateBreakpoint);
   }, [breakpoints]);
 
