@@ -1,0 +1,14 @@
+#!/bin/bash
+
+green() { echo -e "\033[32m$1\033[0m"; }
+
+run_step() {
+    local message="$1"
+    local command="$2"
+
+    green "$message--------------------------------"
+    eval "$command"
+}
+
+run_step "Start linting" "yarn lint"
+run_step "Start formatting" "yarn format"

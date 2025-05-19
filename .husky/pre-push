@@ -1,0 +1,27 @@
+#!/bin/bash
+
+green() { echo -e "\033[32m$1\033[0m"; }
+red() { echo -e "\033[31m$1\033[0m" >&2; }
+
+abort_if_changes_exist() {
+    local condition="$1"
+    local message="$2"
+
+    if ! eval "$condition"; then
+        red "Error: $message"
+        exit 1
+    fi
+}
+
+green "Start pushing--------------------------------"
+
+abort_if_changes_exist \
+    "git diff-index --quiet HEAD --" \
+    "Uncommitted changes detected after code formatting. Please commit these changes before pushing."
+
+abort_if_changes_exist \
+    "git diff --cached --quiet" \
+    "Staged changes found. Please commit them before pushing."
+
+green "Start building--------------------------------"
+yarn build
