@@ -1,27 +1,52 @@
 #!/bin/bash
 
-green() { echo -e "\033[32m$1\033[0m"; }
-red() { echo -e "\033[31m$1\033[0m" >&2; }
+readonly UNCOMMITTED_CHANGES_MSG="Uncommitted changes detected after code formatting. Please commit these changes before pushing."
+readonly STAGED_CHANGES_MSG="Staged changes found. Please commit them before pushing."
+readonly BUILD_FAILED_MSG="Build failed"
 
-abort_if_changes_exist() {
-    local condition="$1"
-    local message="$2"
+print_success() {
+    echo -e "\033[1;32m$1\033[0m"
+}
 
-    if ! eval "$condition"; then
-        red "Error: $message"
-        exit 1
+print_error() {
+    echo -e "\033[1;31m$1\033[0m" >&2
+    exit 1
+}
+
+check_dependencies() {
+    local dependencies=("git" "yarn")
+    for cmd in "${dependencies[@]}"; do
+        if ! command -v "$cmd" &>/dev/null; then
+            print_error "❌ Error: Required command '$cmd' not found"
+        fi
+    done
+}
+
+check_uncommitted_changes() {
+    if ! git diff-index --quiet HEAD --; then
+        print_error "❌ Error: $UNCOMMITTED_CHANGES_MSG"
     fi
 }
 
-green "Start pushing--------------------------------"
+check_staged_changes() {
+    if ! git diff --cached --quiet; then
+        print_error "❌ Error: $STAGED_CHANGES_MSG"
+    fi
+}
 
-abort_if_changes_exist \
-    "git diff-index --quiet HEAD --" \
-    "Uncommitted changes detected after code formatting. Please commit these changes before pushing."
+build() {
+    if ! yarn build; then
+        print_error "❌ Error: $BUILD_FAILED_MSG"
+    fi
+}
 
-abort_if_changes_exist \
-    "git diff --cached --quiet" \
-    "Staged changes found. Please commit them before pushing."
+push() {
+    check_dependencies
+    print_success "🔄 Starting pre-push checks"
+    check_uncommitted_changes
+    check_staged_changes
+    build
+    print_success "✅ All pre-push checks passed"
+}
 
-green "Start building--------------------------------"
-yarn build
+push
